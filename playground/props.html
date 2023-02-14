@@ -9,6 +9,7 @@
   <body>
     <div id="app">
       <app-header v-bind:propsdata="message"></app-header>
+      <app-content v-bind:numdata="num"></app-content>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
@@ -17,13 +18,20 @@
         props: ["propsdata"],
       };
 
+      var appContent = {
+        template: "<div>{{ numdata }}</div>",
+        props: ["numdata"],
+      };
+
       new Vue({
         el: "#app",
         components: {
           "app-header": appHeader,
+          "app-content": appContent,
         },
         data: {
           message: "h1",
+          num: 10,
         },
       });
     </script>
