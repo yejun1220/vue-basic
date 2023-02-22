@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Axios</title>
+  </head>
+  <body>
+    <div id="app">
+      <button v-on:click="getData">get user</button>
+      <div>{{ users }}</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          users: [],
+        },
+        methods: {
+          getData: function () {
+            console.log(this);
+            var vm = this;
+            axios
+              .get("https://jsonplaceholder.typicode.com/users/")
+              .then(function (response) {
+                console.log(response.data);
+                vm.users = response.data;
+                console.log(this);
+                // 콜백함수이기 때문에, new Vue의 this가 아닌 axios Http 통신 후 결과 객체의 this다.
+                // 이때 this가 Vue 인스턴스를 가리키도록 하기 위해서는 콜백 함수 내에서 this를 다른 변수에 할당한 뒤에 사용하거나,
+                // ES6에서 추가된 arrow function을 사용하여 콜백 함수를 정의하면 된다.
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
